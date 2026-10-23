@@ -39,6 +39,11 @@ if ( isset( $_GET['categories'] ) ) {
 	$feed->categories( $categories );
 }
 
+if ( isset( $_GET['tags'] ) ) {
+	$tags = explode( ',', wp_strip_all_tags( $_GET['tags'] ) );
+	$feed->tags( $tags );
+}
+
 if ( isset( $_GET['amount'] ) ) {
 	$amount = (int) wp_strip_all_tags( $_GET['amount'] );
 	$feed->amount( $amount );

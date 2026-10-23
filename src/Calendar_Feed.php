@@ -7,6 +7,8 @@ use DateTime;
 use DateTimeZone;
 use Spatie\IcalendarGenerator\Components\Calendar;
 use Spatie\IcalendarGenerator\Components\Event;
+use Spatie\IcalendarGenerator\Properties\DateTimeProperty;
+use Spatie\IcalendarGenerator\Properties\TextProperty;
 use WP_Query;
 
 /**
@@ -67,7 +69,7 @@ class Calendar_Feed {
 		if ( ! empty( $this->tags ) ) {
 			$query->set( 'tax_query', [
 				[
-					'taxonomy' => 'post_tags',
+					'taxonomy' => 'post_tag',
 					'field'    => 'term_id',
 					'terms'    => $this->tags,
 				],
@@ -188,14 +190,27 @@ class Calendar_Feed {
 		$venue       = tribe_get_venue( $event_id );
 		$start_time  = tribe_get_start_date( $event_id, true, 'Y-m-d H:i:s' );
 		$end_time    = tribe_get_end_date( $event_id, true, 'Y-m-d H:i:s' );
+		$created     = (int) get_post_time( 'U', true, $tribe_event );
+		$modified    = (int) get_post_modified_time( 'U', true, $tribe_event );
+		$revised     = self::make_utc_date( max( $created, $modified ) );
 
+		/*
+		 * Calendar apps only replace an event they already have when it looks
+		 * revised. In a published feed DTSTAMP is when the event was last
+		 * changed, LAST-MODIFIED says the same and SEQUENCE grows with every
+		 * edit. With DTSTAMP set to the creation date, edits never reached
+		 * subscribers while new events did.
+		 */
 		$event = Event::create()
 		              ->name( $tribe_event->post_title )
 		              ->description( $tribe_event->post_excerpt )
 		              ->uniqueIdentifier( $event_id )
-		              ->createdAt( self::make_timezone_date( $tribe_event->post_date ) )
+		              ->createdAt( $revised )
 		              ->startsAt( self::make_timezone_date( $start_time ) )
 		              ->url( get_permalink( $event_id ) );
+
+		$event->appendProperty( DateTimeProperty::fromDateTime( 'LAST-MODIFIED', $revised, true ) );
+		$event->appendProperty( TextProperty::create( 'SEQUENCE', (string) max( 0, $modified - $created ) ) );
 
 		if ( $end_time ) {
 			$event->endsAt( self::make_timezone_date( $end_time ) );
@@ -221,8 +236,12 @@ class Calendar_Feed {
 		return $event;
 	}
 
-	protected static function make_timezone_date( string $date_string = null ): DateTime {
+	protected static function make_timezone_date( ?string $date_string = null ): DateTime {
 		return new DateTime( $date_string, new DateTimeZone( wp_timezone_string() ) );
+	}
+
+	protected static function make_utc_date( int $timestamp ): DateTime {
+		return ( new DateTime( '@' . $timestamp ) )->setTimezone( new DateTimeZone( 'UTC' ) );
 	}
 
 }
