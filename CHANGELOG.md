@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.3.0 - 2026-10-23
+
+### What's Changed
+
+* Bump symfony/process from 5.3.12 to 5.4.51 by @dependabot[bot] in https://github.com/bernskiold/events-calendar-ical-feeds/pull/31
+* Bump yahnis-elsts/plugin-update-checker from 4.11 to 4.13 in the composer-minor-patch group by @dependabot[bot] in https://github.com/bernskiold/events-calendar-ical-feeds/pull/33
+* Bump dependabot/fetch-metadata from 1.6.0 to 1.7.0 in the github-actions-minor-patch group across 1 directory by @dependabot[bot] in https://github.com/bernskiold/events-calendar-ical-feeds/pull/34
+* Bump squizlabs/php_codesniffer from 3.6.1 to 3.13.6 by @dependabot[bot] in https://github.com/bernskiold/events-calendar-ical-feeds/pull/36
+* One-click subscribe links, category feeds in every view, and edited events reach subscribers by @annlickander in https://github.com/bernskiold/events-calendar-ical-feeds/pull/37
+* Fix the release build by @annlickander in https://github.com/bernskiold/events-calendar-ical-feeds/pull/38
+
+**Full Changelog**: https://github.com/bernskiold/events-calendar-ical-feeds/compare/1.2.6...1.3.0
+
 ## 1.2.6 - 2024-03-06
 
 ### What's Changed
