@@ -93,19 +93,19 @@ msgstr "Bara händelser med etiketten %s"
 msgid "Only events in %s"
 msgstr "Bara händelser i %s"
 
-#: src/Calendar_Subscribe_Button.php:66
+#: src/Calendar_Subscribe_Button.php:67
 msgid "Apple Calendar (iPhone, iPad, Mac)"
 msgstr "Apple Kalender (iPhone, iPad, Mac)"
 
-#: src/Calendar_Subscribe_Button.php:70
+#: src/Calendar_Subscribe_Button.php:72
 msgid "Google Calendar"
 msgstr "Google Kalender"
 
-#: src/Calendar_Subscribe_Button.php:74
+#: src/Calendar_Subscribe_Button.php:76 src/Calendar_Subscribe_Button.php:77
 msgid "Outlook.com"
 msgstr "Outlook.com"
 
-#: src/Calendar_Subscribe_Button.php:78
+#: src/Calendar_Subscribe_Button.php:82
 msgid "Outlook for work or school (Microsoft 365)"
 msgstr "Outlook för jobb eller skola (Microsoft 365)"
 
@@ -202,6 +202,18 @@ msgstr "Det finns ingen ändringslogg tillgänglig."
 #: views/subscribe-button.php:29
 msgid "Which events?"
 msgstr "Vilka händelser?"
+
+#: src/Calendar_Subscribe_Button.php:66
+msgid "iPhone/Mac"
+msgstr "iPhone/Mac"
+
+#: src/Calendar_Subscribe_Button.php:71
+msgid "Google"
+msgstr "Google"
+
+#: src/Calendar_Subscribe_Button.php:81
+msgid "Microsoft 365"
+msgstr "Microsoft 365"
 
 #~ msgid ""
 #~ "You can subscribe to the calendar in your calendar application such as\n"

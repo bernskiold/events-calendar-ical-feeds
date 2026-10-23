@@ -41,7 +41,7 @@ use BernskioldMedia\WP\EventsCalendarIcalFeeds\Calendar_Subscribe_Button;
 				<ul class="ecif-subscription-info__apps">
 					<?php foreach ( Calendar_Subscribe_Button::get_app_links( $feed['url'], $feed['name'] ) as $key => $link ) : ?>
 						<li>
-							<a class="ecif-subscription-info__app ecif-subscription-info__app--<?php echo esc_attr( $key ); ?>" href="<?php echo esc_url( $link['url'], [ 'http', 'https', 'webcal' ] ); ?>" <?php echo 0 === strpos( $link['url'], 'webcal://' ) ? '' : 'target="_blank" rel="noopener"'; ?>>
+							<a class="ecif-subscription-info__app ecif-subscription-info__app--<?php echo esc_attr( $key ); ?>" href="<?php echo esc_url( $link['url'], [ 'http', 'https', 'webcal' ] ); ?>" title="<?php echo esc_attr( $link['title'] ); ?>" <?php echo 0 === strpos( $link['url'], 'webcal://' ) ? '' : 'target="_blank" rel="noopener"'; ?>>
 								<?php echo esc_html( $link['label'] ); ?>
 							</a>
 						</li>

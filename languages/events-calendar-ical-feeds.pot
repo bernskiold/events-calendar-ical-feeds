@@ -83,19 +83,19 @@ msgstr ""
 msgid "Only events in %s"
 msgstr ""
 
-#: src/Calendar_Subscribe_Button.php:66
+#: src/Calendar_Subscribe_Button.php:67
 msgid "Apple Calendar (iPhone, iPad, Mac)"
 msgstr ""
 
-#: src/Calendar_Subscribe_Button.php:70
+#: src/Calendar_Subscribe_Button.php:72
 msgid "Google Calendar"
 msgstr ""
 
-#: src/Calendar_Subscribe_Button.php:74
+#: src/Calendar_Subscribe_Button.php:76 src/Calendar_Subscribe_Button.php:77
 msgid "Outlook.com"
 msgstr ""
 
-#: src/Calendar_Subscribe_Button.php:78
+#: src/Calendar_Subscribe_Button.php:82
 msgid "Outlook for work or school (Microsoft 365)"
 msgstr ""
 
@@ -186,4 +186,16 @@ msgstr ""
 
 #: views/subscribe-button.php:29
 msgid "Which events?"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:66
+msgid "iPhone/Mac"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:71
+msgid "Google"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:81
+msgid "Microsoft 365"
 msgstr ""

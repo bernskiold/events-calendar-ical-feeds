@@ -56,26 +56,30 @@ class Calendar_Subscribe_Button {
 	/**
 	 * One-click subscribe links for the common calendar apps.
 	 *
-	 * @return array<string, array{label: string, url: string}>
+	 * @return array<string, array{label: string, title: string, url: string}>
 	 */
 	public static function get_app_links( string $feed_url, string $name ): array {
 		$webcal_url = preg_replace( '#^https?://#', 'webcal://', $feed_url );
 
 		$links = [
 			'apple'     => [
-				'label' => __( 'Apple Calendar (iPhone, iPad, Mac)', 'events-calendar-ical-feeds' ),
+				'label' => __( 'iPhone/Mac', 'events-calendar-ical-feeds' ),
+				'title' => __( 'Apple Calendar (iPhone, iPad, Mac)', 'events-calendar-ical-feeds' ),
 				'url'   => $webcal_url,
 			],
 			'google'    => [
-				'label' => __( 'Google Calendar', 'events-calendar-ical-feeds' ),
+				'label' => __( 'Google', 'events-calendar-ical-feeds' ),
+				'title' => __( 'Google Calendar', 'events-calendar-ical-feeds' ),
 				'url'   => 'https://calendar.google.com/calendar/render?cid=' . rawurlencode( $webcal_url ),
 			],
 			'outlook'   => [
 				'label' => __( 'Outlook.com', 'events-calendar-ical-feeds' ),
+				'title' => __( 'Outlook.com', 'events-calendar-ical-feeds' ),
 				'url'   => self::get_outlook_url( 'live', $webcal_url, $name ),
 			],
 			'microsoft' => [
-				'label' => __( 'Outlook for work or school (Microsoft 365)', 'events-calendar-ical-feeds' ),
+				'label' => __( 'Microsoft 365', 'events-calendar-ical-feeds' ),
+				'title' => __( 'Outlook for work or school (Microsoft 365)', 'events-calendar-ical-feeds' ),
 				'url'   => self::get_outlook_url( 'office', $webcal_url, $name ),
 			],
 		];

@@ -58,8 +58,8 @@
 	list-style: none;
 	margin: 0.75rem 0 1rem;
 	padding: 0;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 0.5rem;
 }
 
@@ -70,11 +70,13 @@
 
 .ecif-subscription .ecif-subscription-info a.ecif-subscription-info__app {
 	display: block;
-	padding: 0.65rem 1rem;
+	padding: 0.45rem 0.75rem;
 	border: 1px solid var(--eicf-border-color);
 	border-radius: 999rem;
+	text-align: center;
 	text-decoration: none;
-	font-size: 0.95rem;
+	font-size: 0.875rem;
+	line-height: 1.3;
 }
 
 .ecif-subscription .ecif-subscription-info a.ecif-subscription-info__app:hover,
