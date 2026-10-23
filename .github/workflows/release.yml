@@ -31,6 +31,14 @@ jobs:
                   replacement: "version$1= '${{ github.event.inputs.versionName }}';"
                   include: 'src/Plugin\.php'
             
+            - name: Set up PHP
+              # php-scoper (dev-master from 2021) turns the deprecations of PHP 8.1+
+              # into fatal errors, so build on the plugin's minimum PHP version.
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '7.4'
+                  tools: composer:v2
+
             - name: Build
               run: composer run release
               

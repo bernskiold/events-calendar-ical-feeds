@@ -3,7 +3,12 @@
   "description": "Extends The Events Calendar with iCal feeds that users can subscribe to in their favorite calendar application.",
   "type": "wordpress-plugin",
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/installers": true,
+      "composer/package-versions-deprecated": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "prefer-stable": true,
   "minimum-stability": "dev",
