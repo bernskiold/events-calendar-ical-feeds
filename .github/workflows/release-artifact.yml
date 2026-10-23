@@ -9,6 +9,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+      - name: Set up PHP
+        # php-scoper (dev-master from 2021) turns the deprecations of PHP 8.1+
+        # into fatal errors, so build on the plugin's minimum PHP version.
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
       - name: Build Project
         run: |
           composer run release
