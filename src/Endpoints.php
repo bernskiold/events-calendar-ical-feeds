@@ -56,21 +56,33 @@ class Endpoints implements Hookable {
 		return home_url( self::get_events_slug().'/'.self::get_feed_slug() );
 	}
 
-	public static function get_prefiltered_feed_url(): string {
+	/**
+	 * The feed URL limited to a category or tag. Without arguments it uses
+	 * the archive being viewed, which isn't known in every calendar view
+	 * (e.g. month view, or after the calendar navigates), so callers that
+	 * know better should pass the term IDs.
+	 */
+	public static function get_prefiltered_feed_url( ?int $category_id = null, ?int $tag_id = null ): string {
 
 		$url = self::get_feed_url();
 
-		if( is_tax('tribe_events_cat')) {
-			$url = add_query_arg('categories', get_queried_object_id(), $url);
+		if ( null === $category_id && is_tax( 'tribe_events_cat' ) ) {
+			$category_id = get_queried_object_id();
 		}
 
-		if( is_tax('post_tag')) {
-			$url = add_query_arg('tags', get_queried_object_id(), $url);
+		if ( null === $tag_id && is_tag() ) {
+			$tag_id = get_queried_object_id();
 		}
 
-		$url = apply_filters( 'events_calendar_ical_feeds_prefiltered_url', $url  );
+		if ( $category_id ) {
+			$url = add_query_arg( 'categories', $category_id, $url );
+		} elseif ( $tag_id ) {
+			$url = add_query_arg( 'tags', $tag_id, $url );
+		}
 
-		return esc_url($url);
+		$url = apply_filters( 'events_calendar_ical_feeds_prefiltered_url', $url );
+
+		return esc_url_raw( $url );
 	}
 
 }

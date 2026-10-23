@@ -1,8 +1,10 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: iCalendar Feeds for The Events Calendar\n"
-"POT-Creation-Date: 2024-02-21 10:31+0100\n"
-"PO-Revision-Date: 2024-03-06 13:20+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-calendar-ical-feeds\n"
+"POT-Creation-Date: 2026-10-23T10:19:02+00:00\n"
+"PO-Revision-Date: 2026-10-23 12:30+0200\n"
 "Last-Translator: Erik Bernskiold <erik@bernskioldmedia.com>\n"
 "Language-Team: Erik Bernskiold <erik@bernskioldmedia.com>\n"
 "Language: sv_SE\n"
@@ -13,43 +15,142 @@ msgstr ""
 "X-Generator: Poedit 3.4.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: events-calendar-ical-feeds.php\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-WPHeader: events-calendar-ical-feeds.php\n"
 
-#: src/Calendar_Feed.php:37
+#. Plugin Name of the plugin
+#: events-calendar-ical-feeds.php
+msgid "iCalendar Feeds for The Events Calendar"
+msgstr "iCalendar-flöden för The Events Calender"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: events-calendar-ical-feeds.php
+msgid "https://bernskioldmedia.com"
+msgstr "https://bernskioldmedia.se"
+
+#. Description of the plugin
+#: events-calendar-ical-feeds.php
+msgid ""
+"Extends The Events Calendar with iCal feeds that users can subscribe to in "
+"their favorite calendar application."
+msgstr ""
+"Utökar evenemangskalendern med iCal-flöden som användarna kan prenumerera på"
+" i sitt favoritkalenderprogram."
+
+#. Author of the plugin
+#: events-calendar-ical-feeds.php
+msgid "Bernskiold Media"
+msgstr "Bernskiold Media"
+
+#: src/Calendar_Feed.php:39
 #, php-format
 msgid "Events from %s"
 msgstr "Händelser från %s"
 
-#: src/Calendar_Feed.php:166
+#: src/Calendar_Feed.php:168
 #, php-format
 msgctxt "VenueName in SiteName"
 msgid "%2$s in %1$s"
 msgstr "%2$s i %1$s"
 
-#: src/Calendar_Feed.php:170
+#: src/Calendar_Feed.php:172
 #, php-format
 msgctxt "OrganizerName for SiteName"
 msgid "%2$s for %1$s"
 msgstr "%2$s för %1$s"
 
-#: src/Calendar_Feed.php:174
+#. translators: 1: Site name. 2: Category or tag name.
+#: src/Calendar_Feed.php:176 src/Calendar_Subscribe_Button.php:46
 #, php-format
 msgctxt "CategoryName at SiteName"
 msgid "%2$s at %1$s"
 msgstr "%2$s på %1$s"
 
-#: src/Calendar_Feed.php:179
+#: src/Calendar_Feed.php:181
 #, php-format
 msgctxt "TagName at SiteName"
 msgid "%2$s at %1$s"
 msgstr "%2$s på %1$s"
+
+#: src/Calendar_Subscribe_Button.php:32
+msgid "All events"
+msgstr "Alla händelser"
+
+#. translators: %s: Category or tag name.
+#: src/Calendar_Subscribe_Button.php:43
+#, php-format
+msgid "Only events tagged %s"
+msgstr "Bara händelser med etiketten %s"
+
+#. translators: %s: Category or tag name.
+#: src/Calendar_Subscribe_Button.php:43
+#, php-format
+msgid "Only events in %s"
+msgstr "Bara händelser i %s"
+
+#: src/Calendar_Subscribe_Button.php:67
+msgid "Apple Calendar (iPhone, iPad, Mac)"
+msgstr "Apple Kalender (iPhone, iPad, Mac)"
+
+#: src/Calendar_Subscribe_Button.php:72
+msgid "Google Calendar"
+msgstr "Google Kalender"
+
+#: src/Calendar_Subscribe_Button.php:76 src/Calendar_Subscribe_Button.php:77
+msgid "Outlook.com"
+msgstr "Outlook.com"
+
+#: src/Calendar_Subscribe_Button.php:82
+msgid "Outlook for work or school (Microsoft 365)"
+msgstr "Outlook för jobb eller skola (Microsoft 365)"
+
+#: views/subscribe-button.php:17
+msgid "Subscribe to the calendar"
+msgstr "Prenumerera på kalendern"
+
+#: views/subscribe-button.php:20
+msgid "Subscribe"
+msgstr "Prenumerera"
+
+#: views/subscribe-button.php:24
+msgid "Subscribe to calendar"
+msgstr "Prenumerera på kalendern"
+
+#: views/subscribe-button.php:25
+msgid ""
+"Choose your calendar app. New and changed events are then added to your "
+"calendar automatically."
+msgstr ""
+"Välj din kalenderapp. Nya och ändrade händelser kommer sedan in i din "
+"kalender automatiskt."
+
+#: views/subscribe-button.php:51
+msgid ""
+"Other calendar app? Copy the address and add it as a subscribed calendar:"
+msgstr ""
+"Annan kalenderapp? Kopiera adressen och lägg till den som en prenumererad "
+"kalender:"
+
+#: views/subscribe-button.php:53
+msgid "Calendar address"
+msgstr "Kalenderadress"
+
+#: views/subscribe-button.php:57
+msgid "Copied!"
+msgstr "Kopierad!"
+
+#: views/subscribe-button.php:58
+msgid "The address is selected. Copy it from the menu that appears."
+msgstr "Adressen är markerad. Kopiera den från menyn som visas."
+
+#: views/subscribe-button.php:59
+msgid "Copy"
+msgstr "Kopiera"
 
 #: vendor_prefixed/bernskioldmedia/wp-plugin-base/src/Jobs/Job.php:366
 #: vendor_prefixed/bernskioldmedia/wp-plugin-base/src/Jobs/WP_Background_Process.php:366
@@ -98,90 +199,48 @@ msgstr "Okänd status för kontroll av uppdatering \"%s\""
 msgid "There is no changelog available."
 msgstr "Det finns ingen ändringslogg tillgänglig."
 
-#: views/subscribe-button.php:12
-msgid "Subscribe to the calendar"
-msgstr "Prenumerera på kalendern"
+#: views/subscribe-button.php:29
+msgid "Which events?"
+msgstr "Vilka händelser?"
 
-#: views/subscribe-button.php:15
-msgid "Subscribe"
-msgstr "Prenumerera"
+#: src/Calendar_Subscribe_Button.php:66
+msgid "iPhone/Mac"
+msgstr "iPhone/Mac"
 
-#: views/subscribe-button.php:19
-msgid "Subscribe to calendar"
-msgstr "Prenumerera på kalendern"
+#: src/Calendar_Subscribe_Button.php:71
+msgid "Google"
+msgstr "Google"
 
-#: views/subscribe-button.php:20
-msgid ""
-"You can subscribe to the calendar in your calendar application such as\n"
-"\t\t\t<a href=\"https://support.google.com/calendar/answer/37100?"
-"hl=en&co=GENIE.Platform%3DDesktop\" title=\"How to subscribe to a public "
-"calendar in Google Calendar\" target=\"_blank\">Google Calendar</a> or\n"
-"\t\t\t<a href=\"https://support.microsoft.com/en-us/office/import-or-"
-"subscribe-to-a-calendar-in-outlook-on-the-"
-"web-503ffaf6-7b86-44fe-8dd6-8099d95f38df\" title=\"How to subscribe to a "
-"calendar in Outlook on the web\" target=\"_blank\">Outlook</a> and get "
-"updates automatically."
-msgstr ""
-"Du kan prenumerera på kalendern i ditt kalenderprogram, exempelvis\n"
-"\t\t\t<a href=\"https://support.google.com/calendar/answer/37100?"
-"hl=en&co=GENIE.Platform%3DDesktop\" title=\"Hur du prenumererar på en "
-"kalender i Google Calendar\" target=\"_blank\">Google Kalender</a> eller\n"
-"\t\t\t<a href=\"https://support.microsoft.com/en-us/office/import-or-"
-"subscribe-to-a-calendar-in-outlook-on-the-"
-"web-503ffaf6-7b86-44fe-8dd6-8099d95f38df\" title=\"Hur du prenumererar på en "
-"kalender i Outlook på webben\" target=\"_blank\">Outlook</a> och få "
-"uppdateringar automatiskt."
+#: src/Calendar_Subscribe_Button.php:81
+msgid "Microsoft 365"
+msgstr "Microsoft 365"
 
-#: views/subscribe-button.php:24
-msgid ""
-"When asked, you will need to provide the following URL to subscribe to all "
-"events:"
-msgstr ""
-"När du blir tillfrågad måste du ange följande URL för att prenumerera på "
-"alla händelser:"
+#~ msgid ""
+#~ "You can subscribe to the calendar in your calendar application such as\n"
+#~ "\t\t\t<a href=\"https://support.google.com/calendar/answer/37100?hl=en&co=GENIE.Platform%3DDesktop\" title=\"How to subscribe to a public calendar in Google Calendar\" target=\"_blank\">Google Calendar</a> or\n"
+#~ "\t\t\t<a href=\"https://support.microsoft.com/en-us/office/import-or-subscribe-to-a-calendar-in-outlook-on-the-web-503ffaf6-7b86-44fe-8dd6-8099d95f38df\" title=\"How to subscribe to a calendar in Outlook on the web\" target=\"_blank\">Outlook</a> and get updates automatically."
+#~ msgstr ""
+#~ "Du kan prenumerera på kalendern i ditt kalenderprogram, exempelvis\n"
+#~ "\t\t\t<a href=\"https://support.google.com/calendar/answer/37100?hl=en&co=GENIE.Platform%3DDesktop\" title=\"Hur du prenumererar på en kalender i Google Calendar\" target=\"_blank\">Google Kalender</a> eller\n"
+#~ "\t\t\t<a href=\"https://support.microsoft.com/en-us/office/import-or-subscribe-to-a-calendar-in-outlook-on-the-web-503ffaf6-7b86-44fe-8dd6-8099d95f38df\" title=\"Hur du prenumererar på en kalender i Outlook på webben\" target=\"_blank\">Outlook</a> och få uppdateringar automatiskt."
 
-#: views/subscribe-button.php:27 views/subscribe-button.php:39
-msgid "Copy"
-msgstr "Kopiera"
+#~ msgid ""
+#~ "When asked, you will need to provide the following URL to subscribe to all "
+#~ "events:"
+#~ msgstr ""
+#~ "När du blir tillfrågad måste du ange följande URL för att prenumerera på "
+#~ "alla händelser:"
 
-#: views/subscribe-button.php:31
-msgid "category"
-msgstr "kategori"
+#~ msgid "category"
+#~ msgstr "kategori"
 
-#: views/subscribe-button.php:33
-msgid "tag"
-msgstr "etikett"
+#~ msgid "tag"
+#~ msgstr "etikett"
 
-#: views/subscribe-button.php:36
 #, php-format
-msgid ""
-"Or, you can use the following URL to only show the events with your current "
-"%s:"
-msgstr ""
-"Du kan också använda följande URL för att bara visa händelserna med din "
-"aktuella %s:"
-
-#: views/subscribe-button.php:43
-msgid "Copied!"
-msgstr "Kopierad!"
-
-#. Plugin Name of the plugin/theme
-msgid "iCalendar Feeds for The Events Calendar"
-msgstr "iCalendar-flöden för The Events Calender"
-
-#. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
-msgid "https://bernskioldmedia.com"
-msgstr "https://bernskioldmedia.se"
-
-#. Description of the plugin/theme
-msgid ""
-"Extends The Events Calendar with iCal feeds that users can subscribe to in "
-"their favorite calendar application."
-msgstr ""
-"Utökar evenemangskalendern med iCal-flöden som användarna kan prenumerera på "
-"i sitt favoritkalenderprogram."
-
-#. Author of the plugin/theme
-msgid "Bernskiold Media"
-msgstr "Bernskiold Media"
+#~ msgid ""
+#~ "Or, you can use the following URL to only show the events with your current "
+#~ "%s:"
+#~ msgstr ""
+#~ "Du kan också använda följande URL för att bara visa händelserna med din "
+#~ "aktuella %s:"

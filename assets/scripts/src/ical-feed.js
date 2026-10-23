@@ -1,60 +1,66 @@
-function fallbackCopyTextToClipboard( text ) {
-	const textArea = document.createElement( 'textarea' );
-	textArea.value = text;
+/**
+ * Copy the feed address.
+ *
+ * The Events Calendar replaces the calendar markup whenever the visitor
+ * changes month or view, so listen on the document instead of binding to
+ * the buttons on page load.
+ */
 
-	// Avoid scrolling to bottom
-	textArea.style.top = '0';
-	textArea.style.left = '0';
-	textArea.style.position = 'fixed';
+function selectInput( input ) {
+	// iOS won't select text in a read-only field.
+	const readOnly = input.readOnly;
 
-	document.body.appendChild( textArea );
-	textArea.focus();
-	textArea.select();
+	input.readOnly = false;
+	input.focus();
+	input.setSelectionRange( 0, input.value.length );
+	input.readOnly = readOnly;
+}
+
+function fallbackCopy( input ) {
+	selectInput( input );
 
 	try {
-		const successful = document.execCommand( 'copy' );
-		const copyResult = document.querySelector( '.js-copy-tec-ical-feed-result' );
-
-		if ( copyResult && successful ) {
-			copyResult.classList.add( 'is-active' );
-		}
+		return document.execCommand( 'copy' );
 	} catch ( err ) {
-		console.error( 'Fallback: Oops, unable to copy', err );
+		return false;
 	}
-
-	document.body.removeChild( textArea );
 }
 
-function copyTextToClipboard( text ) {
-	if ( ! navigator.clipboard ) {
-		fallbackCopyTextToClipboard( text );
+function copyInput( input ) {
+	if ( navigator.clipboard && window.isSecureContext ) {
+		return navigator.clipboard.writeText( input.value ).then(
+			() => true,
+			() => fallbackCopy( input )
+		);
+	}
+
+	return Promise.resolve( fallbackCopy( input ) );
+}
+
+document.addEventListener( 'click', function( event ) {
+	const button = event.target.closest( '.js-copy-tec-ical-feed-button' );
+
+	if ( ! button ) {
 		return;
 	}
-	navigator.clipboard.writeText( text ).then( function() {
-		const copyResult = document.querySelector( '.js-copy-tec-ical-feed-result' );
 
-		if ( copyResult ) {
-			copyResult.classList.add( 'is-active' );
+	const feed = button.closest( '.ecif-subscription-info__feed' );
+	const input = feed && feed.querySelector( '.js-copy-tec-ical-feed-url' );
+	const result = feed && feed.querySelector( '.js-copy-tec-ical-feed-result' );
+
+	if ( ! input ) {
+		return;
+	}
+
+	copyInput( input ).then( function( copied ) {
+		if ( ! copied ) {
+			// Leave the address selected so it can be copied by hand.
+			selectInput( input );
 		}
-	}, function( err ) {
-		console.error( 'Async: Could not copy text: ', err );
+
+		if ( result ) {
+			result.textContent = copied ? button.dataset.copied : button.dataset.failed;
+			result.classList.add( 'is-active' );
+		}
 	} );
-}
-
-const copyAllButton = document.getElementById('js-copy-tec-ical-feed-all-button');
-const copyAllUrl = document.getElementById('js-copy-tec-ical-feed-all-url');
-
-const copyFilteredButton = document.getElementById('js-copy-tec-ical-feed-filtered-button');
-const copyFilteredUrl = document.getElementById('js-copy-tec-ical-feed-filtered-url');
-
-if (copyAllButton) {
-	copyAllButton.addEventListener('click', function (event) {
-		copyTextToClipboard(copyAllUrl.value);
-	});
-}
-
-if (copyFilteredButton) {
-	copyFilteredButton.addEventListener('click', function (event) {
-		copyTextToClipboard(copyFilteredUrl.value);
-	});
-}
+} );

@@ -1,54 +1,141 @@
-#, fuzzy
+# Copyright (C) 2026 Bernskiold Media
+# This file is distributed under the same license as the iCalendar Feeds for The Events Calendar plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: iCalendar Feeds for The Events Calendar\n"
-"POT-Creation-Date: 2024-02-21 10:31+0100\n"
-"PO-Revision-Date: 2021-10-04 22:03+0200\n"
-"Last-Translator: Erik Bernskiold <erik@bernskioldmedia.com>\n"
-"Language-Team: Erik Bernskiold <erik@bernskioldmedia.com>\n"
+"Project-Id-Version: iCalendar Feeds for The Events Calendar 1.2.6\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-calendar-ical-feeds\n"
+"POT-Creation-Date: 2026-10-23T10:19:02+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.4.1\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: events-calendar-ical-feeds.php\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
-"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.min.js\n"
-"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Domain: events-calendar-ical-feeds\n"
+"X-Generator: WP-CLI 2.12.0\n"
 
-#: src/Calendar_Feed.php:37
+#. Plugin Name of the plugin
+#: events-calendar-ical-feeds.php
+msgid "iCalendar Feeds for The Events Calendar"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: events-calendar-ical-feeds.php
+msgid "https://bernskioldmedia.com"
+msgstr ""
+
+#. Description of the plugin
+#: events-calendar-ical-feeds.php
+msgid ""
+"Extends The Events Calendar with iCal feeds that users can subscribe to in "
+"their favorite calendar application."
+msgstr ""
+
+#. Author of the plugin
+#: events-calendar-ical-feeds.php
+msgid "Bernskiold Media"
+msgstr ""
+
+#: src/Calendar_Feed.php:39
 #, php-format
 msgid "Events from %s"
 msgstr ""
 
-#: src/Calendar_Feed.php:166
+#: src/Calendar_Feed.php:168
 #, php-format
 msgctxt "VenueName in SiteName"
 msgid "%2$s in %1$s"
 msgstr ""
 
-#: src/Calendar_Feed.php:170
+#: src/Calendar_Feed.php:172
 #, php-format
 msgctxt "OrganizerName for SiteName"
 msgid "%2$s for %1$s"
 msgstr ""
 
-#: src/Calendar_Feed.php:174
+#. translators: 1: Site name. 2: Category or tag name.
+#: src/Calendar_Feed.php:176 src/Calendar_Subscribe_Button.php:46
 #, php-format
 msgctxt "CategoryName at SiteName"
 msgid "%2$s at %1$s"
 msgstr ""
 
-#: src/Calendar_Feed.php:179
+#: src/Calendar_Feed.php:181
 #, php-format
 msgctxt "TagName at SiteName"
 msgid "%2$s at %1$s"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:32
+msgid "All events"
+msgstr ""
+
+#. translators: %s: Category or tag name.
+#: src/Calendar_Subscribe_Button.php:43
+#, php-format
+msgid "Only events tagged %s"
+msgstr ""
+
+#. translators: %s: Category or tag name.
+#: src/Calendar_Subscribe_Button.php:43
+#, php-format
+msgid "Only events in %s"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:67
+msgid "Apple Calendar (iPhone, iPad, Mac)"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:72
+msgid "Google Calendar"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:76 src/Calendar_Subscribe_Button.php:77
+msgid "Outlook.com"
+msgstr ""
+
+#: src/Calendar_Subscribe_Button.php:82
+msgid "Outlook for work or school (Microsoft 365)"
+msgstr ""
+
+#: views/subscribe-button.php:17
+msgid "Subscribe to the calendar"
+msgstr ""
+
+#: views/subscribe-button.php:20
+msgid "Subscribe"
+msgstr ""
+
+#: views/subscribe-button.php:24
+msgid "Subscribe to calendar"
+msgstr ""
+
+#: views/subscribe-button.php:25
+msgid ""
+"Choose your calendar app. New and changed events are then added to your "
+"calendar automatically."
+msgstr ""
+
+#: views/subscribe-button.php:51
+msgid ""
+"Other calendar app? Copy the address and add it as a subscribed calendar:"
+msgstr ""
+
+#: views/subscribe-button.php:53
+msgid "Calendar address"
+msgstr ""
+
+#: views/subscribe-button.php:57
+msgid "Copied!"
+msgstr ""
+
+#: views/subscribe-button.php:58
+msgid "The address is selected. Copy it from the menu that appears."
+msgstr ""
+
+#: views/subscribe-button.php:59
+msgid "Copy"
 msgstr ""
 
 #: vendor_prefixed/bernskioldmedia/wp-plugin-base/src/Jobs/Job.php:366
@@ -97,75 +184,18 @@ msgstr ""
 msgid "There is no changelog available."
 msgstr ""
 
-#: views/subscribe-button.php:12
-msgid "Subscribe to the calendar"
+#: views/subscribe-button.php:29
+msgid "Which events?"
 msgstr ""
 
-#: views/subscribe-button.php:15
-msgid "Subscribe"
+#: src/Calendar_Subscribe_Button.php:66
+msgid "iPhone/Mac"
 msgstr ""
 
-#: views/subscribe-button.php:19
-msgid "Subscribe to calendar"
+#: src/Calendar_Subscribe_Button.php:71
+msgid "Google"
 msgstr ""
 
-#: views/subscribe-button.php:20
-msgid ""
-"You can subscribe to the calendar in your calendar application such as\n"
-"\t\t\t<a href=\"https://support.google.com/calendar/answer/37100?"
-"hl=en&co=GENIE.Platform%3DDesktop\" title=\"How to subscribe to a public "
-"calendar in Google Calendar\" target=\"_blank\">Google Calendar</a> or\n"
-"\t\t\t<a href=\"https://support.microsoft.com/en-us/office/import-or-"
-"subscribe-to-a-calendar-in-outlook-on-the-"
-"web-503ffaf6-7b86-44fe-8dd6-8099d95f38df\" title=\"How to subscribe to a "
-"calendar in Outlook on the web\" target=\"_blank\">Outlook</a> and get "
-"updates automatically."
-msgstr ""
-
-#: views/subscribe-button.php:24
-msgid ""
-"When asked, you will need to provide the following URL to subscribe to all "
-"events:"
-msgstr ""
-
-#: views/subscribe-button.php:27 views/subscribe-button.php:39
-msgid "Copy"
-msgstr ""
-
-#: views/subscribe-button.php:31
-msgid "category"
-msgstr ""
-
-#: views/subscribe-button.php:33
-msgid "tag"
-msgstr ""
-
-#: views/subscribe-button.php:36
-#, php-format
-msgid ""
-"Or, you can use the following URL to only show the events with your "
-"current %s:"
-msgstr ""
-
-#: views/subscribe-button.php:43
-msgid "Copied!"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "iCalendar Feeds for The Events Calendar"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
-msgid "https://bernskioldmedia.com"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"Extends The Events Calendar with iCal feeds that users can subscribe to in "
-"their favorite calendar application."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Bernskiold Media"
+#: src/Calendar_Subscribe_Button.php:81
+msgid "Microsoft 365"
 msgstr ""
