@@ -129,3 +129,8 @@
 	max-height: 4rem;
 	margin-top: 0.5rem;
 }
+
+/* Theme or calendar styles shouldn't reveal the closed panel or other feeds. */
+.ecif-subscription [hidden] {
+	display: none !important;
+}

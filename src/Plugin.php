@@ -83,22 +83,17 @@ class Plugin {
 			return;
 		}
 
-		// Sites that already load Alpine.js register it as `alpinejs`. Use theirs.
-		if ( ! wp_script_is( 'alpinejs', 'registered' ) ) {
-			$alpine = self::get_asset( 'alpinejs' );
-
-			wp_register_script( 'alpinejs', self::get_url( 'dist/alpinejs.js' ), $alpine['dependencies'], $alpine['version'], true );
-		}
-
 		$main = self::get_asset( 'ical-feed' );
 
-		wp_register_script( 'ecif-main', self::get_url( 'dist/ical-feed.js' ), array_merge( $main['dependencies'], [ 'alpinejs' ] ), $main['version'], true );
+		wp_register_script( 'ecif-main', self::get_url( 'dist/ical-feed.js' ), $main['dependencies'], $main['version'], [
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		] );
 		wp_register_style( 'ecif-main', self::get_url( 'dist/ical-feed.css' ), [], $main['version'], 'screen' );
 		wp_style_add_data( 'ecif-main', 'rtl', 'replace' );
 
 		// Only enqueue where we need it.
 		if ( is_post_type_archive( 'tribe_events' ) || is_singular( 'tribe_events' ) || in_array( get_post_type(), [ 'tribe_organizer', 'tribe_venue' ], true ) ) {
-			wp_enqueue_script( 'alpinejs' );
 			wp_enqueue_script( 'ecif-main' );
 			wp_enqueue_style( 'ecif-main' );
 		}

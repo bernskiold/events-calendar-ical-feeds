@@ -21,6 +21,7 @@ README.md               export-ignore
 /tests                  export-ignore
 phpunit.xml.dist        export-ignore
 .wp-env.json            export-ignore
+vitest.config.mjs       export-ignore
 
 ##
 # Don't try and diff these...
