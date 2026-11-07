@@ -23,5 +23,7 @@ jobs:
             # (SplObjectStorage::contains()), which the suite turns into errors.
             php-versions: '["8.2","8.3","8.4"]'
             js-unit: true
+            js-lint: true
+            check-dist: true
             # Not yet: phpcs (WPCS 3) still reports existing violations.
-            lint: false
+            php-lint: false

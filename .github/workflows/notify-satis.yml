@@ -7,10 +7,14 @@ on:
         tags: ["*"]
     release:
         types: [published]
+    # The release workflow moves the tag with GITHUB_TOKEN, which never fires
+    # `push: tags`. This catches the final, version-bumped commit.
+    workflow_run:
+        workflows: ["Build Release"]
+        types: [completed]
     workflow_dispatch:
 
-permissions:
-    contents: read
+permissions: {}
 
 jobs:
     notify:
