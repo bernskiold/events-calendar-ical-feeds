@@ -166,16 +166,19 @@ describe( 'copyFeed', () => {
 			configurable: true,
 		} );
 		document.execCommand = vi.fn( () => false );
+		// The copy button is only reachable in the open panel's visible
+		// feed, and jsdom (like browsers) won't focus a hidden field.
+		$( '#panel' ).hidden = false;
 
-		const input = feed( 0 ).querySelector( 'input' );
+		const input = feed( 1 ).querySelector( 'input' );
 
 		await expect(
-			copyFeed( feed( 0 ).querySelector( 'button' ) )
+			copyFeed( feed( 1 ).querySelector( 'button' ) )
 		).resolves.toBe( false );
 		expect( document.activeElement ).toBe( input );
 		expect( input.selectionEnd ).toBe( input.value.length );
 		expect(
-			feed( 0 ).querySelector( '.js-copy-tec-ical-feed-result' )
+			feed( 1 ).querySelector( '.js-copy-tec-ical-feed-result' )
 				.textContent
 		).toBe( 'Copy it by hand.' );
 	} );

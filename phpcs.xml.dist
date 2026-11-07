@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<ruleset name="iCalendar Feeds for The Events Calendar">
+	<description>Coding standards for iCalendar Feeds for The Events Calendar.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>/dist/*</exclude-pattern>
+	<exclude-pattern>/languages/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<config name="testVersion" value="8.2-"/>
+	<config name="minimum_wp_version" value="7.0"/>
+
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress">
+		<!-- The plugin uses short array syntax throughout. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<!-- PSR-4 autoloading: files are named after their class. -->
+		<exclude name="WordPress.Files.FileName"/>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="events-calendar-ical-feeds"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="events_calendar_ical_feeds"/>
+				<element value="BernskioldMedia\WP\EventsCalendarIcalFeeds"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

@@ -1,6 +1,6 @@
 {
 	"core": null,
-	"phpVersion": "8.1",
+	"phpVersion": "8.2",
 	"plugins": [
 		"https://downloads.wordpress.org/plugin/the-events-calendar.zip",
 		"."

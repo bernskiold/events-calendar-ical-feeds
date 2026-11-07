@@ -2,8 +2,9 @@
 /**
  * PHPUnit bootstrap for the WordPress integration test suite.
  *
- * Designed to run inside `wp-env`'s `tests-cli` container, which provides the
- * WordPress test library and sets `WP_TESTS_DIR`. Run with:
+ * Runs against the WordPress test library and The Events Calendar installed
+ * by bin/install-wp-tests.sh (as CI does), or inside wp-env's tests-cli
+ * container:
  *
  *   npm run env:start
  *   npm run test:php
