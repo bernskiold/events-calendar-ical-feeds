@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.0 - 2026-11-07
+
+### Requirements
+
+- **PHP 8.2** or later and **WordPress 7.0** or later are now required. Tested up to WordPress 7.1.
+
+### Changed
+
+- `spatie/icalendar-generator` upgraded from 2.9 to 3.3. **If you hook into the feed filters that receive spatie `Calendar` / `Event` objects, check your code against spatie 3.**
+- Carbon is no longer a dependency.
+- Release ZIPs include the production `vendor/`.
+
+### Development
+
+- Node 26; WordPress Coding Standards 3; PHPUnit on PHP 8.2–8.4 × WordPress 7.0 and latest (PHP 8.5 pending The Events Calendar support) via the shared Bernskiold workflows.
+
 ## 1.3.0 - 2026-10-23
 
 ### What's Changed

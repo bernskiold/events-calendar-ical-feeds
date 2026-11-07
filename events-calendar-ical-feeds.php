@@ -3,7 +3,7 @@
  * Plugin Name:         iCalendar Feeds for The Events Calendar
  * Plugin URI:          https://github.com/bernskiold/events-calendar-ical-feeds
  * Description:         Extends The Events Calendar with iCal feeds that users can subscribe to in their favorite calendar application.
- * Version:             1.3.0
+ * Version:             2.0.0
  * Requires at least:   7.0
  * Tested up to:        7.1
  * Requires PHP:        8.2

@@ -16,7 +16,7 @@ class Plugin {
 		Calendar_Subscribe_Button::class,
 	];
 
-	protected static string $version = '1.3.0';
+	protected static string $version = '2.0.0';
 
 	private static ?self $instance = null;
 
