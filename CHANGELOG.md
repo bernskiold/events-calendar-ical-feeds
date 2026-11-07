@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.1 - 2026-11-07
+
+### Fixed
+
+- Packaging only: the 2.0.0 tag on Packagist pointed at the commit before the version bump, so Composer installs reported the previous version. 2.0.1 is tagged on its release commit. No code changes since 2.0.0.
+
 ## 2.0.0 - 2026-11-07
 
 ### Requirements
