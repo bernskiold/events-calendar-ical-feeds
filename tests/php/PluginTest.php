@@ -10,7 +10,6 @@ use BernskioldMedia\WP\EventsCalendarIcalFeeds\Plugin;
 class PluginTest extends TestCase {
 
 	public function tear_down(): void {
-		wp_deregister_script( 'alpinejs' );
 		wp_deregister_script( 'ecif-main' );
 		wp_deregister_style( 'ecif-main' );
 		remove_all_filters( 'events_calendar_ical_load_assets' );
@@ -30,23 +29,15 @@ class PluginTest extends TestCase {
 		$scripts = wp_scripts();
 		$styles  = wp_styles();
 
-		$this->assertSame( Plugin::get_url( 'dist/alpinejs.js' ), $scripts->registered['alpinejs']->src );
 		$this->assertSame( Plugin::get_url( 'dist/ical-feed.js' ), $scripts->registered['ecif-main']->src );
-		$this->assertContains( 'alpinejs', $scripts->registered['ecif-main']->deps );
+		$this->assertSame( [], $scripts->registered['ecif-main']->deps );
+		$this->assertFalse( wp_script_is( 'alpinejs', 'registered' ) );
 		$this->assertSame( Plugin::get_url( 'dist/ical-feed.css' ), $styles->registered['ecif-main']->src );
 		$this->assertSame( 'replace', $styles->get_data( 'ecif-main', 'rtl' ) );
 
 		// Versions come from the generated asset files.
 		$asset = require Plugin::get_path( 'dist/ical-feed.asset.php' );
 		$this->assertSame( $asset['version'], $scripts->registered['ecif-main']->ver );
-	}
-
-	public function test_keeps_an_alpinejs_the_site_registered(): void {
-		wp_register_script( 'alpinejs', 'https://example.org/alpine.js', [], '3.0.0', true );
-
-		Plugin::assets();
-
-		$this->assertSame( 'https://example.org/alpine.js', wp_scripts()->registered['alpinejs']->src );
 	}
 
 	public function test_assets_can_be_disabled(): void {

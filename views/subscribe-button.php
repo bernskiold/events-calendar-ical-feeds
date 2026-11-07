@@ -10,17 +10,22 @@
 
 use BernskioldMedia\WP\EventsCalendarIcalFeeds\Calendar_Subscribe_Button;
 
+$panel_id = wp_unique_id( 'ecif-subscription-' );
+$selected = count( $feeds ) - 1;
+
 ?>
-<div class="ecif-subscription tribe-events-c-ical tribe-common-b2 tribe-common-b3--min-medium" x-data="{open:false, feed:<?php echo count( $feeds ) - 1; ?>}">
+<div class="ecif-subscription tribe-events-c-ical tribe-common-b2 tribe-common-b3--min-medium">
 	<button
-		class="tribe-events-c-ical__link"
-		title="<?php echo esc_html__( 'Subscribe to the calendar', 'events-calendar-ical-feeds' ); ?>"
-		@click="open=!open"
+		type="button"
+		class="tribe-events-c-ical__link js-ecif-subscription-toggle"
+		title="<?php echo esc_attr__( 'Subscribe to the calendar', 'events-calendar-ical-feeds' ); ?>"
+		aria-expanded="false"
+		aria-controls="<?php echo esc_attr( $panel_id ); ?>"
 	>
 		<?php echo esc_html__( 'Subscribe', 'events-calendar-ical-feeds' ); ?>
 	</button>
 
-	<div class="ecif-subscription-info" x-show="open" x-transition x-cloak>
+	<div class="ecif-subscription-info" id="<?php echo esc_attr( $panel_id ); ?>" hidden>
 		<p class="ecif-subscription-info__title"><?php esc_html_e( 'Subscribe to calendar', 'events-calendar-ical-feeds' ); ?></p>
 		<p><?php esc_html_e( 'Choose your calendar app. New and changed events are then added to your calendar automatically.', 'events-calendar-ical-feeds' ); ?></p>
 
@@ -29,7 +34,7 @@ use BernskioldMedia\WP\EventsCalendarIcalFeeds\Calendar_Subscribe_Button;
 				<legend class="screen-reader-text"><?php esc_html_e( 'Which events?', 'events-calendar-ical-feeds' ); ?></legend>
 				<?php foreach ( $feeds as $index => $feed ) : ?>
 					<label>
-						<input type="radio" value="<?php echo (int) $index; ?>" x-model.number="feed" <?php checked( count( $feeds ) - 1, $index ); ?> />
+						<input type="radio" class="js-ecif-subscription-feed" name="<?php echo esc_attr( $panel_id ); ?>-feed" value="<?php echo (int) $index; ?>" <?php checked( $selected, $index ); ?> />
 						<?php echo esc_html( $feed['title'] ); ?>
 					</label>
 				<?php endforeach; ?>
@@ -37,7 +42,7 @@ use BernskioldMedia\WP\EventsCalendarIcalFeeds\Calendar_Subscribe_Button;
 		<?php endif; ?>
 
 		<?php foreach ( $feeds as $index => $feed ) : ?>
-			<div class="ecif-subscription-info__feed" x-show="feed === <?php echo (int) $index; ?>">
+			<div class="ecif-subscription-info__feed" data-feed="<?php echo (int) $index; ?>" <?php echo $selected === $index ? '' : 'hidden'; ?>>
 				<ul class="ecif-subscription-info__apps">
 					<?php foreach ( Calendar_Subscribe_Button::get_app_links( $feed['url'], $feed['name'] ) as $key => $link ) : ?>
 						<li>

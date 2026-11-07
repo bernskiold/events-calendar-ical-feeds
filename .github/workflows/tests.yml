@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
     assets:
-        name: Lint & build assets
+        name: Lint, test & build assets
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
@@ -37,6 +37,9 @@ jobs:
 
             - name: Lint CSS
               run: npm run lint:css
+
+            - name: Run JavaScript unit tests
+              run: npm run test:unit
 
             - name: Build assets
               run: npm run build

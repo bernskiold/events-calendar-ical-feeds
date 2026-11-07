@@ -172,11 +172,7 @@ add_action( 'events_calendar_ical_load_assets', '__return_false' );
 
 ## Assets
 
-This plugin requires [Alpine.js](https://alpinejs.dev) for a few frontend operations. Because Alpine.js is something that you might already be running, or have across many projects, we try to be nice when checking for it.
-
-We load it by checking if the handle `alpinejs` is already registered. If it is, we won't touch it. Just enqueue it. If it isn't, we'll register and enqueue the copy bundled with the plugin.
-
-To completely disable loading of assets, see "Preventing asset loading" above.
+The subscribe button uses a small script without dependencies and a stylesheet, loaded on the calendar, event, venue and organizer pages. To load your own instead, see "Preventing asset loading" above.
 
 ## Development
 
@@ -192,6 +188,12 @@ npm run lint:css
 
 ### Tests
 
+The subscribe button script has unit tests in `tests/unit`, run with [Vitest](https://vitest.dev) and jsdom:
+
+```bash
+npm run test:unit
+```
+
 The PHPUnit integration tests run against a real WordPress with The Events Calendar, in [`wp-env`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/), which needs Docker.
 
 ```bash
@@ -200,4 +202,4 @@ npm run test:php    # run PHPUnit inside the tests-cli container
 npm run env:stop
 ```
 
-Set `WP_ENV_PHP_VERSION` (e.g. `8.1`) or `WP_ENV_CORE` (e.g. `WordPress/WordPress#6.9`) before `env:start` to test other versions. CI (`.github/workflows/tests.yml`) runs the suite on PHP 8.1–8.4 against WordPress 6.9 and the latest release, and checks that the committed `dist/` matches the sources.
+Set `WP_ENV_PHP_VERSION` (e.g. `8.1`) or `WP_ENV_CORE` (e.g. `WordPress/WordPress#6.9`) before `env:start` to test other versions. CI (`.github/workflows/tests.yml`) runs the unit tests, and the PHPUnit suite on PHP 8.1–8.4 against WordPress 6.9 and the latest release, and checks that the committed `dist/` matches the sources.
