@@ -5,92 +5,25 @@ on:
         branches:
             - main
     pull_request:
+    workflow_dispatch:
 
-# Least privilege: these jobs only read the repo.
 permissions:
     contents: read
 
-# A newer push to the same branch/PR cancels the in-flight run for it.
 concurrency:
     group: tests-${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
 jobs:
-    assets:
-        name: Lint, test & build assets
-        runs-on: ubuntu-latest
-        timeout-minutes: 10
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Set up Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version-file: .nvmrc
-                  cache: npm
-
-            - name: Install dependencies
-              run: npm ci
-
-            - name: Lint JavaScript
-              run: npm run lint:js
-
-            - name: Lint CSS
-              run: npm run lint:css
-
-            - name: Run JavaScript unit tests
-              run: npm run test:unit
-
-            - name: Build assets
-              run: npm run build
-
-            # dist/ is committed, so it has to match the sources.
-            - name: Check dist/ is up to date
-              run: git diff --exit-code -- dist
-
-    php:
-        name: PHP ${{ matrix.php }} / WordPress ${{ matrix.wp }}
-        runs-on: ubuntu-latest
-        timeout-minutes: 20
-        strategy:
-            fail-fast: false
-            matrix:
-                # The plugin's floor (PHP 8.2, WordPress 7.0) up to the newest.
-                # Not PHP 8.5 yet: The Events Calendar itself raises PHP 8.5
-                # deprecations (SplObjectStorage::contains()), which the
-                # suite turns into errors.
-                php: ['8.2', '8.3', '8.4']
-                wp: ['7.0', 'latest']
-        services:
-            mysql:
-                image: mysql:8.0
-                env:
-                    MYSQL_ROOT_PASSWORD: root
-                    MYSQL_DATABASE: wordpress_tests
-                ports:
-                    - 3306:3306
-                options: >-
-                    --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
-                    --health-interval=10s
-                    --health-timeout=5s
-                    --health-retries=10
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Set up PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
-                  extensions: mysqli
-                  tools: composer
-                  coverage: none
-
-            - name: Install Composer dependencies
-              uses: ramsey/composer-install@v3
-
-            # Also installs The Events Calendar into the test WordPress.
-            - name: Install WordPress ${{ matrix.wp }} and its test library
-              run: bin/install-wp-tests.sh "${{ matrix.wp }}" wordpress_tests root root 127.0.0.1 >> "$GITHUB_ENV"
-
-            - name: Run PHP tests
-              run: composer test
+    tests:
+        name: Tests
+        uses: bernskiold/.github/.github/workflows/wordpress-plugin-tests.yml@main
+        with:
+            # Not PHP 8.5 yet: The Events Calendar raises PHP 8.5 deprecations
+            # (SplObjectStorage::contains()), which the suite turns into errors.
+            php-versions: '["8.2","8.3","8.4"]'
+            js-unit: true
+            js-lint: true
+            check-dist: true
+            # Not yet: phpcs (WPCS 3) still reports existing violations.
+            php-lint: false

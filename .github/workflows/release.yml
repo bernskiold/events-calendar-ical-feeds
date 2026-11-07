@@ -1,4 +1,5 @@
 name: Build Release
+
 on:
     release:
         types: [published]
@@ -8,91 +9,9 @@ permissions:
 
 jobs:
     release:
-        name: Build & Attach Plugin
-        runs-on: ubuntu-latest
-        steps:
-
-            - name: Checkout Code
-              uses: actions/checkout@v4
-              with:
-                  ref: main
-                  fetch-depth: 0
-
-            - name: Determine Version
-              id: version
-              env:
-                  TAG: ${{ github.event.release.tag_name }}
-              run: echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
-
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version-file: .nvmrc
-                  cache: npm
-
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: '8.2'
-                  tools: composer:v2
-                  coverage: none
-
-            - name: Modify Package.json
-              uses: mingjun97/file-regex-replace@v1
-              with:
-                  regex: '"version": "([0-9\.]*)",'
-                  replacement: '"version": "${{ steps.version.outputs.version }}",'
-                  include: 'package\.json'
-
-            - name: Modify Main Plugin File
-              uses: mingjun97/file-regex-replace@v1
-              with:
-                  regex: 'Version:(\s+)(.+)'
-                  replacement: 'Version:$1${{ steps.version.outputs.version }}'
-                  include: '${{ github.event.repository.name}}\.php'
-
-            - name: Modify Main Plugin Class
-              uses: mingjun97/file-regex-replace@v1
-              with:
-                  regex: "version(\\s*\\t*)= '(.*)';"
-                  replacement: "version$1= '${{ steps.version.outputs.version }}';"
-                  include: 'src/Plugin\.php'
-
-            - name: Install NPM Packages
-              run: npm ci --ignore-scripts
-
-            - name: Build
-              run: npm run build
-
-            - name: Commit Version Bump & Build
-              uses: stefanzweifel/git-auto-commit-action@v5
-              with:
-                  branch: main
-                  commit_message: "Prepare release ${{ steps.version.outputs.version }}"
-
-            - name: Move Tag to Release Commit
-              env:
-                  TAG: ${{ github.event.release.tag_name }}
-              run: |
-                  git tag -f "$TAG" HEAD
-                  git push -f origin "refs/tags/$TAG"
-
-            # Unlike bm-block-library this plugin needs its Composer
-            # dependencies (spatie/icalendar-generator, the update checker) in
-            # the ZIP. vendor/ isn't committed, so add it to the archived copy.
-            # .gitattributes (export-ignore) decides what else goes in.
-            - name: Create Plugin ZIP
-              env:
-                  SLUG: ${{ github.event.repository.name }}
-              run: |
-                  mkdir -p build
-                  git archive --format=tar --prefix="$SLUG/" HEAD | tar -x -C build
-                  composer install --no-dev --optimize-autoloader --no-interaction --working-dir="build/$SLUG"
-                  rm "build/$SLUG/composer.json" "build/$SLUG/composer.lock"
-                  (cd build && zip -qq -r "../$SLUG.zip" "$SLUG")
-
-            - name: Attach ZIP to Release
-              uses: softprops/action-gh-release@v2
-              with:
-                  tag_name: ${{ github.event.release.tag_name }}
-                  files: ${{ github.event.repository.name }}.zip
+        uses: bernskiold/.github/.github/workflows/wordpress-plugin-release.yml@main
+        with:
+            version-files: |
+                src/Plugin.php
+            # Ship the production vendor/ (runtime Composer dependencies) in the ZIP.
+            composer: true
