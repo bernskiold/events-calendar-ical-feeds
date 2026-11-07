@@ -1,3 +1,9 @@
+# Kept local rather than calling bernskiold/.github's
+# wordpress-plugin-release.yml: that workflow attaches a plain `git archive`,
+# while this plugin's ZIP must also carry its production vendor/
+# (spatie/icalendar-generator and the update checker). Switch to the shared
+# caller once it can bundle vendor/.
+#
 name: Build Release
 on:
     release:

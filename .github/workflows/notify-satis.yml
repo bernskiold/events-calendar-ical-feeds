@@ -1,0 +1,19 @@
+# Tells packages.bernskiold.com to rebuild its Satis index when this package
+# publishes a new version.
+name: Notify Satis
+
+on:
+    push:
+        tags: ["*"]
+    release:
+        types: [published]
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    notify:
+        name: Notify Satis
+        uses: bernskiold/.github/.github/workflows/satis-notify.yml@main
+        secrets: inherit
