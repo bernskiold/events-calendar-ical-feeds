@@ -1,8 +1,29 @@
-name: Build Release
+# Run from Actions -> Release -> Run workflow, or:
+#   gh workflow run release.yml -f version=1.2.3
+#
+# Bumps the version, updates CHANGELOG.md, builds, makes a single
+# "Release x.y.z" commit, tags it (the tag is created once and never moved,
+# so Packagist sees the final commit), publishes the GitHub release with the
+# plugin ZIP. Write the notes ahead of time in a draft release tagged
+# x.y.z if you like; otherwise the notes input or generated notes are used.
+name: Release
 
 on:
-    release:
-        types: [published]
+    workflow_dispatch:
+        inputs:
+            version:
+                description: Version to release, without a leading "v" (e.g. 1.2.3)
+                required: true
+                type: string
+            notes:
+                description: Release notes (optional; a draft release's notes or generated notes are used otherwise)
+                required: false
+                type: string
+            prerelease:
+                description: Pre-release
+                required: false
+                type: boolean
+                default: false
 
 permissions:
     contents: write
@@ -11,7 +32,11 @@ jobs:
     release:
         uses: bernskiold/.github/.github/workflows/wordpress-plugin-release.yml@main
         with:
+            version: ${{ inputs.version }}
+            notes: ${{ inputs.notes }}
+            prerelease: ${{ inputs.prerelease }}
             version-files: |
                 src/Plugin.php
             # Ship the production vendor/ (runtime Composer dependencies) in the ZIP.
             composer: true
+        secrets: inherit
