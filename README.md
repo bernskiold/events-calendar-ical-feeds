@@ -189,3 +189,15 @@ npm run build   # production build
 npm run lint:js
 npm run lint:css
 ```
+
+### Tests
+
+The PHPUnit integration tests run against a real WordPress with The Events Calendar, in [`wp-env`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/), which needs Docker.
+
+```bash
+npm run env:start   # boot WordPress + The Events Calendar (first run pulls images)
+npm run test:php    # run PHPUnit inside the tests-cli container
+npm run env:stop
+```
+
+Set `WP_ENV_PHP_VERSION` (e.g. `8.1`) or `WP_ENV_CORE` (e.g. `WordPress/WordPress#6.9`) before `env:start` to test other versions. CI (`.github/workflows/tests.yml`) runs the suite on PHP 8.1–8.4 against WordPress 6.9 and the latest release, and checks that the committed `dist/` matches the sources.
