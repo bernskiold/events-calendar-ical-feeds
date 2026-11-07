@@ -2,7 +2,6 @@
 
 namespace BernskioldMedia\WP\EventsCalendarIcalFeeds;
 
-
 use DateTime;
 use DateTimeZone;
 use Spatie\IcalendarGenerator\Components\Calendar;
@@ -10,6 +9,8 @@ use Spatie\IcalendarGenerator\Components\Event;
 use Spatie\IcalendarGenerator\Properties\DateTimeProperty;
 use Spatie\IcalendarGenerator\Properties\TextProperty;
 use WP_Query;
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Calendar_Feed

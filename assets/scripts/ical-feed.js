@@ -1,3 +1,5 @@
+import '../styles/ical-feed.css';
+
 /**
  * Copy the feed address.
  *
@@ -21,7 +23,7 @@ function fallbackCopy( input ) {
 
 	try {
 		return document.execCommand( 'copy' );
-	} catch ( err ) {
+	} catch {
 		return false;
 	}
 }
@@ -37,7 +39,7 @@ function copyInput( input ) {
 	return Promise.resolve( fallbackCopy( input ) );
 }
 
-document.addEventListener( 'click', function( event ) {
+document.addEventListener( 'click', function ( event ) {
 	const button = event.target.closest( '.js-copy-tec-ical-feed-button' );
 
 	if ( ! button ) {
@@ -46,20 +48,23 @@ document.addEventListener( 'click', function( event ) {
 
 	const feed = button.closest( '.ecif-subscription-info__feed' );
 	const input = feed && feed.querySelector( '.js-copy-tec-ical-feed-url' );
-	const result = feed && feed.querySelector( '.js-copy-tec-ical-feed-result' );
+	const result =
+		feed && feed.querySelector( '.js-copy-tec-ical-feed-result' );
 
 	if ( ! input ) {
 		return;
 	}
 
-	copyInput( input ).then( function( copied ) {
+	copyInput( input ).then( function ( copied ) {
 		if ( ! copied ) {
 			// Leave the address selected so it can be copied by hand.
 			selectInput( input );
 		}
 
 		if ( result ) {
-			result.textContent = copied ? button.dataset.copied : button.dataset.failed;
+			result.textContent = copied
+				? button.dataset.copied
+				: button.dataset.failed;
 			result.classList.add( 'is-active' );
 		}
 	} );

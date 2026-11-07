@@ -7,6 +7,12 @@ feed, but not subscribe to it.
 
 We believe the use for a calendar export is to subscribe so that updates properly reflect. Therefore, this plugin adds a subscribable, auto-updating feed.
 
+## Requirements
+
+- WordPress 6.5 or later
+- PHP 8.1 or later
+- [The Events Calendar](https://wordpress.org/plugins/the-events-calendar/)
+
 ## Installation
 
 You can install this package via composer.
@@ -168,6 +174,18 @@ add_action( 'events_calendar_ical_load_assets', '__return_false' );
 
 This plugin requires [Alpine.js](https://alpinejs.dev) for a few frontend operations. Because Alpine.js is something that you might already be running, or have across many projects, we try to be nice when checking for it.
 
-We load it by checking if the handle `alpinejs` is already registered. If it is, we won't touch it. Just enqueue it. If it isn't, we'll register and enqueue.
+We load it by checking if the handle `alpinejs` is already registered. If it is, we won't touch it. Just enqueue it. If it isn't, we'll register and enqueue the copy bundled with the plugin.
 
 To completely disable loading of assets, see "Preventing asset loading" above.
+
+## Development
+
+The front-end assets are built with [`@wordpress/scripts`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/). Sources live in `assets/`, and the build writes to `dist/`, which is committed.
+
+```bash
+npm run setup   # npm install, composer install and a first build
+npm run start   # rebuild on change
+npm run build   # production build
+npm run lint:js
+npm run lint:css
+```

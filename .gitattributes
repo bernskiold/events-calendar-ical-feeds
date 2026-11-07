@@ -2,20 +2,31 @@
 # Exclude from release archives.
 #
 # Here we add resources that are not needed in the download
-# for production use.
+# for production use. The release ZIP is built with `git archive`,
+# so this list decides what goes into it.
 ##
-
-.editorconfig			export-ignore
-.gitattributes       	export-ignore
-.gitignore           	export-ignore
-.github					export-ignore
-.git                 	export-ignore
-.gitkeep			 	export-ignore
+.editorconfig           export-ignore
+.gitattributes          export-ignore
+.gitignore              export-ignore
+.nvmrc                  export-ignore
+.github                 export-ignore
+.git                    export-ignore
+.gitkeep                export-ignore
+webpack.config.js       export-ignore
+package.json            export-ignore
+package-lock.json       export-ignore
+CHANGELOG.md            export-ignore
+README.md               export-ignore
+/assets                 export-ignore
 
 ##
 # Don't try and diff these...
 ##
 composer.lock -diff
+package-lock.json -diff
+dist/*.js -diff
+dist/*.css -diff
+dist/*.asset.php -diff
 
 ##
 # Handle line endings.
@@ -27,3 +38,4 @@ composer.lock -diff
 *.png binary
 *.gif binary
 *.ico binary
+*.mo binary

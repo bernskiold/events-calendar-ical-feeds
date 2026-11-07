@@ -28,7 +28,7 @@
 }
 
 .ecif-subscription p.ecif-subscription-info__title {
-	font-weight: bold;
+	font-weight: 700;
 	font-size: 1rem;
 	margin-bottom: 0.25rem;
 }
@@ -111,8 +111,6 @@
 	margin: 0;
 	font-size: 0.95rem;
 }
-
-.ecif-subscription-info__copy {}
 
 .ecif-subscription-info__copy:hover,
 .ecif-subscription-info__copy:focus {
