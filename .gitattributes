@@ -18,6 +18,9 @@ package-lock.json       export-ignore
 CHANGELOG.md            export-ignore
 README.md               export-ignore
 /assets                 export-ignore
+/tests                  export-ignore
+phpunit.xml.dist        export-ignore
+.wp-env.json            export-ignore
 
 ##
 # Don't try and diff these...

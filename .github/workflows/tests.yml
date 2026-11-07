@@ -1,0 +1,96 @@
+name: Tests
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+# Least privilege: these jobs only read the repo.
+permissions:
+    contents: read
+
+# A newer push to the same branch/PR cancels the in-flight run for it.
+concurrency:
+    group: tests-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    assets:
+        name: Lint & build assets
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Lint JavaScript
+              run: npm run lint:js
+
+            - name: Lint CSS
+              run: npm run lint:css
+
+            - name: Build assets
+              run: npm run build
+
+            # dist/ is committed, so it has to match the sources.
+            - name: Check dist/ is up to date
+              run: git diff --exit-code -- dist
+
+    php:
+        name: PHP ${{ matrix.php }} / WordPress ${{ matrix.wp }}
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        strategy:
+            fail-fast: false
+            matrix:
+                # The plugin requires PHP 8.1+. The Events Calendar requires
+                # WordPress 6.9+, so test that and the latest release.
+                php: ['8.1', '8.2', '8.3', '8.4']
+                wp: ['6.9', 'latest']
+        env:
+            # Drive the PHP and WordPress versions of the wp-env containers.
+            WP_ENV_PHP_VERSION: ${{ matrix.php }}
+            WP_ENV_CORE: ${{ matrix.wp != 'latest' && format('WordPress/WordPress#{0}', matrix.wp) || '' }}
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  tools: composer
+                  coverage: none
+
+            - name: Install Composer dependencies
+              uses: ramsey/composer-install@v3
+
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Start wp-env
+              run: npm run env:start
+
+            - name: Show versions
+              run: npx wp-env run tests-cli wp core version --extra && npx wp-env run tests-cli php --version
+
+            - name: Run PHP tests
+              run: npm run test:php
+
+            - name: Stop wp-env
+              if: ${{ always() }}
+              run: npm run env:stop

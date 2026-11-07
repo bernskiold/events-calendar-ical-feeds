@@ -23,12 +23,22 @@
     "yahnis-elsts/plugin-update-checker": "^6.0"
   },
   "require-dev": {
-    "bernskioldmedia/phpcs-wordpress": "dev-master"
+    "bernskioldmedia/phpcs-wordpress": "dev-master",
+    "phpunit/phpunit": "^9.6",
+    "yoast/phpunit-polyfills": "^2.0 || ^3.0"
   },
   "autoload": {
     "psr-4": {
       "BernskioldMedia\\WP\\EventsCalendarIcalFeeds\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BernskioldMedia\\WP\\EventsCalendarIcalFeeds\\Tests\\": "tests/php/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
   },
   "config": {
     "sort-packages": true,
