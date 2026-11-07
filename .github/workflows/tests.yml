@@ -55,14 +55,25 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # The plugin requires PHP 8.1+. The Events Calendar requires
-                # WordPress 6.9+, so test that and the latest release.
-                php: ['8.1', '8.2', '8.3', '8.4']
-                wp: ['6.9', 'latest']
-        env:
-            # Drive the PHP and WordPress versions of the wp-env containers.
-            WP_ENV_PHP_VERSION: ${{ matrix.php }}
-            WP_ENV_CORE: ${{ matrix.wp != 'latest' && format('WordPress/WordPress#{0}', matrix.wp) || '' }}
+                # The plugin's floor (PHP 8.2, WordPress 7.0) up to the newest.
+                # Not PHP 8.5 yet: The Events Calendar itself raises PHP 8.5
+                # deprecations (SplObjectStorage::contains()), which the
+                # suite turns into errors.
+                php: ['8.2', '8.3', '8.4']
+                wp: ['7.0', 'latest']
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ROOT_PASSWORD: root
+                    MYSQL_DATABASE: wordpress_tests
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=10
         steps:
             - uses: actions/checkout@v4
 
@@ -70,30 +81,16 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
+                  extensions: mysqli
                   tools: composer
                   coverage: none
 
             - name: Install Composer dependencies
               uses: ramsey/composer-install@v3
 
-            - name: Set up Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version-file: .nvmrc
-                  cache: npm
-
-            - name: Install dependencies
-              run: npm ci
-
-            - name: Start wp-env
-              run: npm run env:start
-
-            - name: Show versions
-              run: npx wp-env run tests-cli wp core version --extra && npx wp-env run tests-cli php --version
+            # Also installs The Events Calendar into the test WordPress.
+            - name: Install WordPress ${{ matrix.wp }} and its test library
+              run: bin/install-wp-tests.sh "${{ matrix.wp }}" wordpress_tests root root 127.0.0.1 >> "$GITHUB_ENV"
 
             - name: Run PHP tests
-              run: npm run test:php
-
-            - name: Stop wp-env
-              if: ${{ always() }}
-              run: npm run env:stop
+              run: composer test

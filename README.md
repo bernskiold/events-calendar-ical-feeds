@@ -9,8 +9,8 @@ We believe the use for a calendar export is to subscribe so that updates properl
 
 ## Requirements
 
-- WordPress 6.5 or later
-- PHP 8.1 or later
+- WordPress 7.0 or later
+- PHP 8.2 or later
 - [The Events Calendar](https://wordpress.org/plugins/the-events-calendar/)
 
 ## Installation
@@ -194,7 +194,15 @@ The subscribe button script has unit tests in `tests/unit`, run with [Vitest](ht
 npm run test:unit
 ```
 
-The PHPUnit integration tests run against a real WordPress with The Events Calendar, in [`wp-env`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/), which needs Docker.
+The PHPUnit integration tests run against a real WordPress with The Events Calendar. Without Docker beyond a MySQL server, install both and the WordPress test library with `bin/install-wp-tests.sh`, which prints the environment variables PHPUnit needs:
+
+```bash
+docker run -d --name wptests -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=wordpress_tests -p 3306:3306 mysql:8.0
+eval "$(bin/install-wp-tests.sh latest wordpress_tests root root 127.0.0.1 | sed 's/^/export /')"
+composer test
+```
+
+Pass `7.0` instead of `latest` to test the minimum WordPress, and set `TEC_VERSION` to pin The Events Calendar. Or use [`wp-env`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/):
 
 ```bash
 npm run env:start   # boot WordPress + The Events Calendar (first run pulls images)
@@ -202,4 +210,4 @@ npm run test:php    # run PHPUnit inside the tests-cli container
 npm run env:stop
 ```
 
-Set `WP_ENV_PHP_VERSION` (e.g. `8.1`) or `WP_ENV_CORE` (e.g. `WordPress/WordPress#6.9`) before `env:start` to test other versions. CI (`.github/workflows/tests.yml`) runs the unit tests, and the PHPUnit suite on PHP 8.1–8.4 against WordPress 6.9 and the latest release, and checks that the committed `dist/` matches the sources.
+CI runs the unit tests, and the PHPUnit suite on PHP 8.2–8.4 against WordPress 7.0 and the latest release. PHP 8.5 waits on The Events Calendar, which still raises PHP 8.5 deprecations.
