@@ -2,15 +2,14 @@
 
 namespace BernskioldMedia\WP\EventsCalendarIcalFeeds;
 
-
-use ECIF_Vendor\BernskioldMedia\WP\PluginBase\Interfaces\Hookable;
+defined( 'ABSPATH' ) || exit;
 
 class Endpoints implements Hookable {
 
 	public static function hooks(): void {
 		add_action( 'init', [ self::class, 'rules' ] );
 		add_filter( 'query_vars', [ self::class, 'query_vars' ] );
-		add_action( 'template_include', [ self::class, 'router' ] );
+		add_filter( 'template_include', [ self::class, 'router' ] );
 	}
 
 	protected static function get_events_slug(): string{

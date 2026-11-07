@@ -1,13 +1,19 @@
+# Dependencies
 node_modules/
-.idea
 /vendor/
-/vendor_prefixed/*
-!/vendor_prefixed/.gitkeep
+
+# Build artefacts
 *.LICENSE.txt
 *.js.map
-*.log
-*.sql
-*.sqlite
+/build/
+
+# Test caches & artefacts
+.phpunit.result.cache
+/artifacts/
+
+# OS / editor junk
+.idea
+.vscode/
 .DS_Store
 .DS_Store?
 ._*
@@ -15,3 +21,8 @@ node_modules/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite

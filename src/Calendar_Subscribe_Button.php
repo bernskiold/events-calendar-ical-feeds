@@ -2,15 +2,16 @@
 
 namespace BernskioldMedia\WP\EventsCalendarIcalFeeds;
 
-
 use WP_Term;
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Calendar_Subscribe_Button
  *
  * @package BernskioldMedia\WP\EventsCalendarIcalFeeds
  */
-class Calendar_Subscribe_Button {
+class Calendar_Subscribe_Button implements Hookable {
 
 	public static function hooks(): void {
 		add_filter( 'tribe_template_html:events/v2/components/ical-link', [ self::class, 'render' ], 10, 4 );
