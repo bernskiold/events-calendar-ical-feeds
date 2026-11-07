@@ -67,7 +67,7 @@ class CalendarSubscribeButtonTest extends TestCase {
 		$this->assertStringNotContainsString( 'Original', $html );
 		$this->assertStringContainsString( 'class="ecif-subscription ', $html );
 		$this->assertStringContainsString( 'value="' . esc_attr( Endpoints::get_feed_url() ) . '"', $html );
-		$this->assertStringContainsString( 'href="webcal://example.org/events/ical-feed"', $html );
+		$this->assertStringContainsString( 'href="' . preg_replace( '#^https?://#', 'webcal://', Endpoints::get_feed_url() ) . '"', $html );
 		// Only one feed, so there is nothing to choose between.
 		$this->assertStringNotContainsString( 'type="radio"', $html );
 	}
