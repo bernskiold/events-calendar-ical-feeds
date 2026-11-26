@@ -57,24 +57,27 @@ class Calendar_Feed {
 		$query = tribe_get_events( $this->get_filters(), true );
 		$query->set( 'fields', 'ids' );
 
+		// With both categories and tags, an event must match both.
+		$tax_query = [];
+
 		if ( ! empty( $this->categories ) ) {
-			$query->set( 'tax_query', [
-				[
-					'taxonomy' => 'tribe_events_cat',
-					'field'    => 'term_id',
-					'terms'    => $this->categories,
-				],
-			] );
+			$tax_query[] = [
+				'taxonomy' => 'tribe_events_cat',
+				'field'    => 'term_id',
+				'terms'    => $this->categories,
+			];
 		}
 
 		if ( ! empty( $this->tags ) ) {
-			$query->set( 'tax_query', [
-				[
-					'taxonomy' => 'post_tag',
-					'field'    => 'term_id',
-					'terms'    => $this->tags,
-				],
-			] );
+			$tax_query[] = [
+				'taxonomy' => 'post_tag',
+				'field'    => 'term_id',
+				'terms'    => $this->tags,
+			];
+		}
+
+		if ( $tax_query ) {
+			$query->set( 'tax_query', $tax_query );
 		}
 
 		$query = apply_filters( 'events_calendar_ical_query', $query );

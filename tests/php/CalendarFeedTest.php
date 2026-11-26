@@ -182,6 +182,21 @@ class CalendarFeedTest extends TestCase {
 		$this->assertStringNotContainsString( 'SUMMARY:Paid event', $ical );
 	}
 
+	public function test_feed_for_a_category_and_a_tag_needs_both(): void {
+		$concerts = self::factory()->term->create( [ 'taxonomy' => 'tribe_events_cat', 'name' => 'Concerts' ] );
+		$tag      = self::factory()->tag->create( [ 'name' => 'Free' ] );
+
+		$this->create_event( [ 'post_title' => 'Free concert', 'terms' => [ 'tribe_events_cat' => [ $concerts ], 'post_tag' => [ $tag ] ] ] );
+		$this->create_event( [ 'post_title' => 'Paid concert', 'terms' => [ 'tribe_events_cat' => [ $concerts ] ] ] );
+		$this->create_event( [ 'post_title' => 'Free talk', 'terms' => [ 'post_tag' => [ $tag ] ] ] );
+
+		$ical = $this->create_feed( $this->feed()->categories( [ $concerts ] )->tags( [ $tag ] ) );
+
+		$this->assertStringContainsString( 'SUMMARY:Free concert', $ical );
+		$this->assertStringNotContainsString( 'SUMMARY:Paid concert', $ical );
+		$this->assertStringNotContainsString( 'SUMMARY:Free talk', $ical );
+	}
+
 	public function test_amount_limits_the_events(): void {
 		for ( $i = 1; $i <= 3; $i++ ) {
 			$this->create_event( [ 'post_title' => "Event {$i}", 'start' => "+{$i} days 10:00", 'end' => "+{$i} days 11:00" ] );
