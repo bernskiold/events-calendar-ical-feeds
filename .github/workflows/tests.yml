@@ -19,9 +19,12 @@ jobs:
         name: Tests
         uses: bernskiold/.github/.github/workflows/wordpress-plugin-tests.yml@main
         with:
-            # Not PHP 8.5 yet: The Events Calendar raises PHP 8.5 deprecations
-            # (SplObjectStorage::contains()), which the suite turns into errors.
+            # Not PHP 8.5 or 8.6 yet: The Events Calendar (6.18.5) raises PHP 8.5
+            # deprecations (SplObjectStorage::contains()), which the suite turns
+            # into errors. Add "8.5" and "8.6" once it stops.
             php-versions: '["8.2","8.3","8.4"]'
+            # Drop 7.2-RC3 once 7.2 is released and "latest" picks it up.
+            wp-versions: '["7.0","latest","7.2-RC3"]'
             js-unit: true
             js-lint: true
             check-dist: true
