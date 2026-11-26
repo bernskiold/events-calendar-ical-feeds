@@ -48,27 +48,23 @@ if [ ! -f "$DIR/wordpress/wp-content/plugins/the-events-calendar/the-events-cale
 	rm "$DIR/tec.zip"
 fi
 
-case "$WP_VERSION" in
-	*-*)
-		# A pre-release such as 7.2-RC3 has no wp-phpunit package yet, so take
-		# the test library from its branch in wordpress-develop.
-		# That library reads wp-tests-config.php from the checkout's root.
-		TESTS_DIR="$DIR/wordpress-develop/tests/phpunit"
-		CONFIG_FILE="$DIR/wordpress-develop/wp-tests-config.php"
-		if [ ! -d "$TESTS_DIR/includes" ]; then
-			git clone --quiet --depth 1 --branch "$WP_MINOR" --filter=blob:none --sparse \
-				https://github.com/WordPress/wordpress-develop.git "$DIR/wordpress-develop"
-			git -C "$DIR/wordpress-develop" sparse-checkout set tests/phpunit
-		fi
-		;;
-	*)
-		TESTS_DIR="$DIR/vendor/wp-phpunit/wp-phpunit"
-		CONFIG_FILE="$DIR/wp-tests-config.php"
-		if [ ! -d "$TESTS_DIR" ]; then
-			composer --working-dir="$DIR" require --quiet --no-interaction "wp-phpunit/wp-phpunit:~$WP_MINOR.0"
-		fi
-		;;
-esac
+TESTS_DIR="$DIR/vendor/wp-phpunit/wp-phpunit"
+CONFIG_FILE="$DIR/wp-tests-config.php"
+
+# wp-phpunit publishes no pre-releases, and a new release can arrive before its
+# package does. Then take the test library from the release branch of
+# wordpress-develop. Its bootstrap reads the config from the directory above
+# includes/.
+if [ ! -d "$TESTS_DIR" ] && { [ "$WP_VERSION" != "${WP_VERSION%%-*}" ] || ! composer --working-dir="$DIR" require --quiet --no-interaction "wp-phpunit/wp-phpunit:~$WP_MINOR.0" >&2; }; then
+	TESTS_DIR="$DIR/wordpress-develop/tests/phpunit"
+	CONFIG_FILE="$TESTS_DIR/wp-tests-config.php"
+
+	if [ ! -d "$TESTS_DIR/includes" ]; then
+		rm -rf "$DIR/wordpress-develop"
+		git clone --quiet --depth 1 --branch "$WP_MINOR" --filter=blob:none --sparse https://github.com/WordPress/wordpress-develop.git "$DIR/wordpress-develop" >&2
+		git -C "$DIR/wordpress-develop" sparse-checkout set tests/phpunit/includes tests/phpunit/data >&2
+	fi
+fi
 
 cat > "$CONFIG_FILE" <<CONFIG
 <?php
